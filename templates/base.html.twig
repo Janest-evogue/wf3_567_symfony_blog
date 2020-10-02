@@ -16,7 +16,9 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAdmin">
                     <div class="navbar-nav">
-                        <a class="nav-link" href="#">Features</a>
+                        <a class="nav-link" href="{{ path('app_admin_category_index') }}">
+                            Gestion catégories
+                        </a>
                     </div>
                 </div>
             </div>
@@ -39,6 +41,21 @@
             </div>
         </nav>
         <div class="container">
+            {# affichage des messages flash #}
+            {% for type, messages in app.session.flashBag.all %}
+                {#
+                pour la classe alert-danger de bootstrap quand
+                le type de message est error
+                #}
+                {% if type == 'error' %}
+                    {% set type = 'danger' %}
+                {% endif %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ type }} mt-2">
+                        {{ message|raw }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
             {% block body %}{% endblock %}
         </div>
         {% block javascripts %}
